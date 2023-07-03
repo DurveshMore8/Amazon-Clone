@@ -32,6 +32,9 @@ migrate_working_dir/
 .pub/
 /build/
 
+#server
+/server/node_modules
+
 # Symbolication related
 app.*.symbols
 
