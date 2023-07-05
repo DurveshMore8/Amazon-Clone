@@ -34,6 +34,7 @@ migrate_working_dir/
 
 #server
 /server/node_modules
+/server/.env
 
 # Symbolication related
 app.*.symbols
