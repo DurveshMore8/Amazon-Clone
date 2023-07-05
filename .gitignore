@@ -34,6 +34,10 @@ migrate_working_dir/
 
 #server
 /server/node_modules
+/server/.env
+
+#client
+/lib/constants/ip.dart
 
 # Symbolication related
 app.*.symbols
