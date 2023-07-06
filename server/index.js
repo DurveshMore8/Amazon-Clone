@@ -3,12 +3,14 @@ const mongoose = require('mongoose');
 require('dotenv').config();
 
 const authRouter = require('./routes/auth');
+const adminRouter = require('./routes/admin');
 
 const PORT = 3000;
 const app = express();
 
 app.use(express.json());
 app.use(authRouter);
+app.use(adminRouter);
 
 mongoose
   .connect(process.env.MONGO_URI)
