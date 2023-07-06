@@ -109,7 +109,7 @@ class AuthService {
         prefs.setString('x-auth-token', '');
       }
 
-      http.Response tokenRes = await http.post(
+      var tokenRes = await http.post(
         Uri.parse('$uri/tokenIsValid'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
@@ -124,7 +124,7 @@ class AuthService {
           Uri.parse('$uri/'),
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
-            'x-auth-token': token,
+            'x-auth-token': token
           },
         );
 
