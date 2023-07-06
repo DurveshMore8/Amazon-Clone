@@ -1,5 +1,5 @@
 const express = require("express");
-const adminRouter = express.Router;
+const adminRouter = express.Router();
 const admin = require("../middlewares/admin");
 const Product = require("../models/product");
 
@@ -22,3 +22,5 @@ adminRouter.post("/admin/add-product", admin, async (req, res) => {
     res.status(500).json({ error: e.message });
   }
 });
+
+module.exports = adminRouter;
