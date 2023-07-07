@@ -53,6 +53,10 @@ class _AddProductScreenState extends State<AddProductScreen> {
         quantity: double.parse(_quantityController.text),
         category: category,
         images: images,
+        onSuccess: () {
+          showSnackBar(context, 'Product Added Successfully!');
+          Navigator.pop(context);
+        },
       );
     }
   }
