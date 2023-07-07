@@ -23,6 +23,7 @@ class AdminServices {
     required double quantity,
     required String category,
     required List<File> images,
+    required VoidCallback onSuccess,
   }) async {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
 
@@ -61,8 +62,7 @@ class AdminServices {
         response: res,
         context: context,
         onSuccess: () {
-          showSnackBar(context, 'Product Added Successfully!');
-          Navigator.pop(context);
+          onSuccess();
         },
       );
     } catch (e) {
@@ -108,5 +108,42 @@ class AdminServices {
       );
     }
     return productList;
+  }
+
+  // DELETE PRODUCT
+  void deleteProduct({
+    required BuildContext context,
+    required Product product,
+    required VoidCallback onSuccess,
+  }) async {
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+
+    try {
+      http.Response res = await http.post(
+        Uri.parse(
+          '$uri/admin/delete-product',
+        ),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'x-auth-token': userProvider.user.token,
+        },
+        body: jsonEncode({
+          'id': product.id,
+        }),
+      );
+
+      httpErrorHandle(
+        response: res,
+        context: context,
+        onSuccess: () {
+          onSuccess();
+        },
+      );
+    } catch (e) {
+      showSnackBar(
+        context,
+        e.toString(),
+      );
+    }
   }
 }
