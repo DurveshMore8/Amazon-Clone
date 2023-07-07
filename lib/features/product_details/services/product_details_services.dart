@@ -6,42 +6,37 @@ import 'package:amazon_clone/constants/error_handling.dart';
 import 'package:amazon_clone/constants/ip.dart';
 import 'package:amazon_clone/constants/utils.dart';
 import 'package:amazon_clone/models/product.dart';
+import 'package:amazon_clone/models/user.dart';
 import 'package:amazon_clone/providers/user_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
+import 'package:http/http.dart' as http;
 
-class HomeServices {
-  Future<List<Product>> fetchCategoryProducts({
+class ProductDetailsServices {
+  void rateProduct({
     required BuildContext context,
-    required String category,
+    required Product product,
+    required double rating,
   }) async {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
-    List<Product> productList = [];
 
     try {
-      http.Response res = await http.get(
-        Uri.parse('$uri/api/products?category=$category'),
+      http.Response res = await http.post(
+        Uri.parse('$uri/api/rate-product'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           'x-auth-token': userProvider.user.token,
         },
+        body: jsonEncode({
+          'id': product.id!,
+          'rating': rating,
+        }),
       );
 
       httpErrorHandle(
         response: res,
         context: context,
-        onSuccess: () {
-          for (int i = 0; i < jsonDecode(res.body).length; i++) {
-            productList.add(
-              Product.fromJson(
-                jsonEncode(
-                  jsonDecode(res.body)[i],
-                ),
-              ),
-            );
-          }
-        },
+        onSuccess: () {},
       );
     } catch (e) {
       showSnackBar(
@@ -49,37 +44,34 @@ class HomeServices {
         e.toString(),
       );
     }
-
-    return productList;
   }
 
-  Future<Product> fetchDealOfTheDay({
+  void addToCart({
     required BuildContext context,
+    required Product product,
   }) async {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
-    Product product = Product(
-      name: '',
-      description: '',
-      quantity: 0,
-      images: [],
-      category: '',
-      price: 0,
-    );
 
     try {
-      http.Response res = await http.get(
-        Uri.parse('$uri/api/deal-of-the-day'),
-        headers: {
+      http.Response res = await http.post(
+        Uri.parse('$uri/api/add-to-cart'),
+        headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           'x-auth-token': userProvider.user.token,
         },
+        body: jsonEncode({
+          'id': product.id!,
+        }),
       );
 
       httpErrorHandle(
         response: res,
         context: context,
         onSuccess: () {
-          product = Product.fromJson(res.body);
+          User user = userProvider.user.copyWith(
+            cart: jsonDecode(res.body)['cart'],
+          );
+          userProvider.setUserFromModel(user);
         },
       );
     } catch (e) {
@@ -88,7 +80,5 @@ class HomeServices {
         e.toString(),
       );
     }
-
-    return product;
   }
 }
