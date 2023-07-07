@@ -19,6 +19,7 @@ class SearchProduct extends StatelessWidget {
     if (totalRating != 0) {
       averageRating = totalRating / product.rating!.length;
     }
+
     return Column(
       children: [
         Container(
