@@ -1,7 +1,7 @@
 const express = require("express");
 const productRouter = express.Router();
 const auth = require("../middlewares/auth");
-const Product = require("../models/product");
+const { Product } = require("../models/product");
 const { default: mongoose } = require("mongoose");
 
 // GET CATEGORY PRODUCT
