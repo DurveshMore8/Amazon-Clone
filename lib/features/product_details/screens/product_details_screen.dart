@@ -1,6 +1,7 @@
 import 'package:amazon_clone/common/widgets/custom_button.dart';
 import 'package:amazon_clone/common/widgets/start.dart';
 import 'package:amazon_clone/constants/global_variables.dart';
+import 'package:amazon_clone/features/product_details/services/product_details_services.dart';
 import 'package:amazon_clone/features/search/screens/search_screen.dart';
 import 'package:amazon_clone/models/product.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -20,6 +21,9 @@ class ProductDetailsScreen extends StatefulWidget {
 }
 
 class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
+  final ProductDetailsServices productDetailsServices =
+      ProductDetailsServices();
+
   void navigateToSearchScreen(String query) {
     Navigator.pushNamed(
       context,
@@ -148,7 +152,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 return Builder(
                   builder: (BuildContext context) => Image.network(
                     e,
-                    fit: BoxFit.cover,
+                    fit: BoxFit.contain,
                     height: 200,
                   ),
                 );
@@ -158,6 +162,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 height: 300,
               ),
             ),
+            const SizedBox(height: 10),
             Container(
               color: Colors.black12,
               height: 5,
@@ -244,7 +249,13 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 Icons.star,
                 color: GlobalVariables.secondaryColor,
               ),
-              onRatingUpdate: (rating) {},
+              onRatingUpdate: (rating) {
+                productDetailsServices.rateProduct(
+                  context: context,
+                  product: widget.product,
+                  rating: rating,
+                );
+              },
             ),
           ],
         ),
