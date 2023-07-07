@@ -106,10 +106,7 @@ class AdminServices {
         context,
         e.toString(),
       );
-
-      return productList;
     }
-
     return productList;
   }
 }
