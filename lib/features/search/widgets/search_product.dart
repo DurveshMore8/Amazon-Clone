@@ -1,4 +1,4 @@
-import 'package:amazon_clone/common/widgets/start.dart';
+import 'package:amazon_clone/common/widgets/stars.dart';
 import 'package:amazon_clone/models/product.dart';
 import 'package:flutter/material.dart';
 
