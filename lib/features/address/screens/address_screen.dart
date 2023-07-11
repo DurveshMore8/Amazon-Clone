@@ -1,6 +1,7 @@
 import 'package:amazon_clone/common/widgets/custom_textfield.dart';
 import 'package:amazon_clone/constants/global_variables.dart';
 import 'package:amazon_clone/constants/utils.dart';
+import 'package:amazon_clone/features/address/services/address_services.dart';
 import 'package:amazon_clone/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:pay/pay.dart';
@@ -24,6 +25,7 @@ class _AddressScreenState extends State<AddressScreen> {
   final TextEditingController _pincodeController = TextEditingController();
   final TextEditingController _cityController = TextEditingController();
   final _addressFormKey = GlobalKey<FormState>();
+  final AddressServices _addressServices = AddressServices();
 
   String addressToBeUsed = '';
   List<PaymentItem> paymentItems = [];
@@ -40,7 +42,14 @@ class _AddressScreenState extends State<AddressScreen> {
     );
   }
 
-  void onGooglePayResult(res) {}
+  void onGooglePayResult(res) {
+    if (Provider.of<UserProvider>(context).user.address.isEmpty) {
+      _addressServices.saveUserAddress(
+        context: context,
+        address: addressToBeUsed,
+      );
+    }
+  }
 
   void payPressed(String addressFromProvider) {
     addressToBeUsed = '';
