@@ -42,7 +42,7 @@ class _AddressScreenState extends State<AddressScreen> {
     );
   }
 
-  void onGooglePayResult(res) {
+  void placeOrder() {
     if (Provider.of<UserProvider>(context, listen: false)
         .user
         .address
@@ -72,11 +72,13 @@ class _AddressScreenState extends State<AddressScreen> {
       if (_addressFormKey.currentState!.validate()) {
         addressToBeUsed =
             '${_flatBuildingController.text}, ${_areaController.text}, ${_cityController.text} - ${_pincodeController.text}';
+        placeOrder();
       } else {
         throw Exception('Please enter all the values!');
       }
     } else if (addressFromProvider.isNotEmpty) {
       addressToBeUsed = addressFromProvider;
+      placeOrder();
     } else {
       showSnackBar(context, 'ERROR');
     }
@@ -176,20 +178,25 @@ class _AddressScreenState extends State<AddressScreen> {
                   ],
                 ),
               ),
-              GooglePayButton(
-                // ignore: deprecated_member_use
-                paymentConfigurationAsset: 'gpay.json',
-                onPaymentResult: onGooglePayResult,
-                paymentItems: paymentItems,
-                width: double.infinity,
-                height: 50,
-                type: GooglePayButtonType.order,
-                margin: const EdgeInsets.only(top: 15),
-                loadingIndicator: const Center(
-                  child: CircularProgressIndicator(),
+              InkWell(
+                onTap: () => payPressed(address),
+                child: Container(
+                  width: double.infinity,
+                  height: 50,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    gradient: GlobalVariables.appBarGradient,
+                    borderRadius: BorderRadius.circular(50),
+                  ),
+                  child: const Text(
+                    'Place Order',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ),
-                onPressed: () => payPressed(address),
-              ),
+              )
             ],
           ),
         ),
