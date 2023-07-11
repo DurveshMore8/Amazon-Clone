@@ -43,10 +43,19 @@ class _AddressScreenState extends State<AddressScreen> {
   }
 
   void onGooglePayResult(res) {
-    if (Provider.of<UserProvider>(context).user.address.isEmpty) {
+    if (Provider.of<UserProvider>(context, listen: false)
+        .user
+        .address
+        .isEmpty) {
       _addressServices.saveUserAddress(
         context: context,
         address: addressToBeUsed,
+      );
+
+      _addressServices.placeOrder(
+        context: context,
+        address: addressToBeUsed,
+        totalSum: double.parse(widget.totalAmount),
       );
     }
   }
