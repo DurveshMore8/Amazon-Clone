@@ -15,10 +15,7 @@ const admin = async (req, res, next) => {
 
     const user = await User.findById(isVerified.id);
     if (user.type == "user" || user.type == "seller") {
-      return res
-        .status(401)
-        .json({ msg: "You are not an admin!" });
-
+      return res.status(401).json({ msg: "You are not an admin!" });
     }
     req.user = isVerified.id;
     req.token = token;

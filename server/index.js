@@ -1,11 +1,11 @@
-const express = require('express');
-const mongoose = require('mongoose');
-require('dotenv').config();
+const express = require("express");
+const mongoose = require("mongoose");
+require("dotenv").config();
 
-const authRouter = require('./routes/auth');
-const adminRouter = require('./routes/admin');
-const productRouter = require('./routes/product');
-const userRouter = require('./routes/user');
+const authRouter = require("./routes/auth");
+const adminRouter = require("./routes/admin");
+const productRouter = require("./routes/product");
+const userRouter = require("./routes/user");
 
 const PORT = 3000;
 const app = express();
@@ -19,7 +19,7 @@ app.use(userRouter);
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {
-    console.log('Connected to database');
+    console.log("Connected to database");
   })
   .catch((e) => {
     console.log(e);
