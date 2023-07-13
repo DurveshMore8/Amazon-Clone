@@ -7,8 +7,6 @@ const adminRouter = require("./routes/admin");
 const productRouter = require("./routes/product");
 const userRouter = require("./routes/user");
 
-const MONGO_URI =
-  "mongodb+srv://DurveshMore:durveshmore8@cluster0.4aeabqa.mongodb.net/?retryWrites=true&w=majority";
 const PORT = process.env.PORT || 3000;
 const app = express();
 
@@ -19,14 +17,12 @@ app.use(productRouter);
 app.use(userRouter);
 
 mongoose
-  .connect(MONGO_URI)
+  .connect(process.env.MONGO_URI)
   .then(() => {
-    console.log("Connected to database");
+    app.listen(PORT, () => {
+      console.log(`Connection at port ${PORT}`);
+    });
   })
   .catch((e) => {
     console.log(e);
   });
-
-app.listen(PORT, () => {
-  console.log(`Connection at port ${PORT}`);
-});
