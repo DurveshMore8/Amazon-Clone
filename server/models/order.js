@@ -8,8 +8,8 @@ const orderSchema = mongoose.Schema({
       quantity: {
         type: Number,
         required: true,
-      }
-    }
+      },
+    },
   ],
   totalPrice: {
     type: Number,
@@ -30,7 +30,7 @@ const orderSchema = mongoose.Schema({
   status: {
     type: Number,
     default: 0,
-  }
+  },
 });
 
 const Order = mongoose.model("Order", orderSchema);

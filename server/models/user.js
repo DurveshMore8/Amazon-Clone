@@ -1,5 +1,5 @@
-const mongoose = require('mongoose');
-const {productSchema} = require("../models/product");
+const mongoose = require("mongoose");
+const { productSchema } = require("../models/product");
 
 const userSchema = mongoose.Schema({
   name: {
@@ -16,7 +16,7 @@ const userSchema = mongoose.Schema({
         const re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
         return value.match(re);
       },
-      message: 'Please enter a valid email address',
+      message: "Please enter a valid email address",
     },
   },
   password: {
@@ -26,16 +26,16 @@ const userSchema = mongoose.Schema({
       validator: (value) => {
         return value.length > 6;
       },
-      message: 'Please enter a long password',
+      message: "Please enter a long password",
     },
   },
   address: {
     type: String,
-    default: '',
+    default: "",
   },
   type: {
     type: String,
-    default: 'user',
+    default: "user",
   },
   cart: [
     {
@@ -43,10 +43,10 @@ const userSchema = mongoose.Schema({
       quantity: {
         type: Number,
         required: true,
-      }
-    }
-  ]
+      },
+    },
+  ],
 });
 
-const User = mongoose.model('User', userSchema);
+const User = mongoose.model("User", userSchema);
 module.exports = User;

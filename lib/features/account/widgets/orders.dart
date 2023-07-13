@@ -3,7 +3,7 @@ import 'package:amazon_clone/constants/global_variables.dart';
 import 'package:amazon_clone/features/account/services/account_services.dart';
 import 'package:amazon_clone/features/account/widgets/product.dart';
 import 'package:amazon_clone/models/order.dart';
-import 'package:amazon_clone/order_details/screens/order_details_screen.dart';
+import 'package:amazon_clone/features/order_details/screens/order_details_screen.dart';
 import 'package:flutter/material.dart';
 
 class Orders extends StatefulWidget {
